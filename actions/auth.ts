@@ -31,13 +31,14 @@ export async function signIn(_state: unknown, formData: FormData) {
   const { email, password } = parsed.data
   const supabase = await createClient()
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password })
+  const { error, data } = await supabase.auth.signInWithPassword({ email, password })
   if (error) return { error: { _form: ['Email o contraseña incorrectos'] } }
 
   // Check if user has an org; redirect accordingly
   const { data: profile } = await supabase
     .from('profiles')
     .select('org_id')
+    .eq('id', data.user?.id)
     .single()
 
   if (!profile?.org_id) redirect('/onboarding')

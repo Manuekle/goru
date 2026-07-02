@@ -12,10 +12,13 @@ export async function GET(request: NextRequest) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
 
     if (!error) {
+      const { data: { user } } = await supabase.auth.getUser()
+
       // Check if user needs onboarding
       const { data: profile } = await supabase
         .from('profiles')
         .select('org_id')
+        .eq('id', user?.id)
         .single()
 
       if (!profile?.org_id) {
