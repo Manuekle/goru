@@ -12,7 +12,9 @@ interface FormSelectProps {
   label?: string
   name: string
   options: { value: string; label: string }[]
+  value?: string
   defaultValue?: string
+  onValueChange?: (value: string) => void
   required?: boolean
   error?: string
   disabled?: boolean
@@ -23,7 +25,9 @@ export function FormSelect({
   label,
   name,
   options,
+  value,
   defaultValue,
+  onValueChange,
   required,
   error,
   disabled,
@@ -38,7 +42,7 @@ export function FormSelect({
           {label}
         </label>
       )}
-      <Select name={name} items={options} defaultValue={defaultValue} required={required} disabled={disabled}>
+      <Select name={name} items={options} value={value} defaultValue={defaultValue} onValueChange={onValueChange} required={required} disabled={disabled}>
         <SelectTrigger id={inputId} className={className}>
           <SelectValue />
         </SelectTrigger>

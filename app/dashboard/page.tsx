@@ -11,13 +11,14 @@ import { Note01Icon, Grid02Icon, Coins01Icon } from '@hugeicons/core-free-icons'
 export default async function DashboardPage() {
   const supabase = await createClient()
 
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/auth/login')
+  const { data: { session } } = await supabase.auth.getSession()
+  const userId = session?.user.id
+  if (!userId) redirect('/auth/login')
 
   const { data: profile } = await supabase
     .from('profiles')
     .select('org_id, organizations(timezone)')
-    .eq('id', user.id)
+    .eq('id', userId)
     .single()
 
   if (!profile?.org_id) redirect('/onboarding')

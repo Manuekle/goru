@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { createOrg, addOnboardingCourt, checkSlugAvailability } from '@/actions/onboarding'
 import { Input } from '@/components/ui/Input'
-import { Select } from '@/components/ui/Select'
+import { FormSelect } from '@/components/ui/FormSelect'
 import { Button } from '@/components/ui/Button'
 import { slugify } from '@/lib/utils'
 import { SURFACE_LABELS } from '@/lib/utils'
@@ -140,11 +140,11 @@ export default function OnboardingPage() {
             <p className="field-hint">Solo letras minúsculas, números y guiones</p>
           </div>
 
-          <Select
+          <FormSelect
             label="Zona horaria"
             name="timezone"
             value={timezone}
-            onChange={(e) => setTimezone(e.target.value)}
+            onValueChange={setTimezone}
             options={TIMEZONES}
           />
 
@@ -191,7 +191,7 @@ export default function OnboardingPage() {
             error={courtErrors.name?.[0]}
           />
 
-          <Select
+          <FormSelect
             label="Superficie"
             name="surface"
             options={SURFACE_OPTIONS}

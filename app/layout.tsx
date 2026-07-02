@@ -10,6 +10,7 @@ const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 const SITE_URL = 'https://goru.app'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'Goru — Software para gestionar tu negocio de canchas',
     template: '%s — Goru',
@@ -21,8 +22,18 @@ export const metadata: Metadata = {
     'sistema canchas fútbol', 'cobro online canchas', 'administración canchas',
     'booking sports courts', 'cancha sintética', 'gestión deportiva',
   ],
-  metadataBase: new URL(SITE_URL),
   alternates: { canonical: SITE_URL },
+  icons: {
+    icon: '/icon',
+    apple: '/apple-icon',
+  },
+  manifest: '/site.webmanifest',
+  appleWebApp: {
+    capable: true,
+    title: 'Goru',
+    statusBarStyle: 'black-translucent',
+  },
+  themeColor: '#0a0a0a',
   openGraph: {
     title: 'Goru — El software para gestionar tu negocio de canchas',
     description:
@@ -31,11 +42,20 @@ export const metadata: Metadata = {
     siteName: 'Goru',
     locale: 'es_CO',
     type: 'website',
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'Goru',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Goru — Software para canchas',
     description: 'Reservas online, cobro automático y panel administrativo para tu negocio de canchas.',
+    images: ['/opengraph-image'],
   },
   robots: { index: true, follow: true },
 }

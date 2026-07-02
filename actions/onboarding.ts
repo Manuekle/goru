@@ -46,6 +46,14 @@ export async function createOrg(formData: FormData) {
 
   if (profileError) return { error: { _form: [profileError.message] } }
 
+  // Refresh session so new JWT includes org_id (avoids fallback query)
+  // Non-blocking: fallback in my_org_id() handles stale JWTs
+  try {
+    await supabase.auth.refreshSession()
+  } catch {
+    // Token refresh might fail if session expired — fallback handles it
+  }
+
   return { org }
 }
 
