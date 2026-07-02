@@ -3,6 +3,7 @@
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import { Spinner } from '@/components/ui/Spinner'
+import { Button } from '@/components/ui/Button'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { ArrowLeft02Icon, ArrowRight02Icon } from '@hugeicons/core-free-icons'
 
@@ -27,15 +28,15 @@ export function CalendarHeader({
   return (
     <div className="cal-header">
       <div className="cal-header__nav">
-        <button className="btn btn-ghost btn-sm" onClick={onPrev} aria-label="Día anterior">
+        <Button variant="ghost" size="sm" onClick={onPrev} aria-label="Día anterior">
           <HugeiconsIcon icon={ArrowLeft02Icon} size={16} />
-        </button>
-        <button className="btn btn-ghost btn-sm" onClick={onNext} aria-label="Día siguiente">
+        </Button>
+        <Button variant="ghost" size="sm" onClick={onNext} aria-label="Día siguiente">
           <HugeiconsIcon icon={ArrowRight02Icon} size={16} />
-        </button>
-        <button className="btn btn-dark btn-sm" onClick={onToday}>
+        </Button>
+        <Button variant="dark" size="sm" onClick={onToday}>
           Hoy
-        </button>
+        </Button>
       </div>
 
       <div className="cal-header__date">

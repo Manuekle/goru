@@ -43,7 +43,12 @@ export function BookingBlock({
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && onClick()}
     >
-      <p className="booking-block__time">{start} – {end}</p>
+      <p className="booking-block__time">
+        {start} – {end}
+        {booking.payment_status === 'pending' && (
+          <span className="booking-block__pay-dot" title="Pago pendiente" />
+        )}
+      </p>
       {client && <p className="booking-block__client">{client.full_name}</p>}
     </div>
   )

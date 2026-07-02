@@ -2,8 +2,12 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table'
 import { ROLE_LABELS } from '@/lib/utils'
 import { TeamInviteForm } from '@/components/team/TeamInviteForm'
+import { RemoveMemberButton } from '@/components/team/RemoveMemberButton'
+import { RevokeInvitationButton } from '@/components/team/RevokeInvitationButton'
 
 export default async function TeamPage() {
   const supabase = await createClient()
@@ -42,62 +46,84 @@ export default async function TeamPage() {
         <h1 className="dash-page__title">Equipo</h1>
       </div>
 
-      <section className="dash-section">
-        <h2 className="dash-section__title">Miembros</h2>
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Rol</th>
-            </tr>
-          </thead>
-          <tbody>
+      <Card>
+        <CardHeader>
+          <CardTitle>Miembros</CardTitle>
+        </CardHeader>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Nombre</TableHead>
+              <TableHead>Rol</TableHead>
+              {isAdmin && <TableHead></TableHead>}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {members?.map((m) => (
-              <tr key={m.id}>
-                <td>
+              <TableRow key={m.id}>
+                <TableCell>
                   <p>{m.full_name}</p>
                   {m.id === user.id && <p className="data-table__sub">Vos</p>}
-                </td>
-                <td>
+                </TableCell>
+                <TableCell>
                   <Badge>{ROLE_LABELS[m.role]}</Badge>
-                </td>
-              </tr>
+                </TableCell>
+                {isAdmin && (
+                  <TableCell>
+                    {m.role !== 'owner' && m.id !== user.id && (
+                      <RemoveMemberButton memberId={m.id} memberName={m.full_name} />
+                    )}
+                  </TableCell>
+                )}
+              </TableRow>
             ))}
-          </tbody>
-        </table>
-      </section>
+          </TableBody>
+        </Table>
+      </Card>
 
       {invitations && invitations.length > 0 && (
-        <section className="dash-section">
-          <h2 className="dash-section__title">Invitaciones pendientes</h2>
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Email</th>
-                <th>Rol</th>
-                <th>Vence</th>
-              </tr>
-            </thead>
-            <tbody>
+        <Card>
+          <CardHeader>
+            <CardTitle>Invitaciones pendientes</CardTitle>
+          </CardHeader>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Email</TableHead>
+                <TableHead>Rol</TableHead>
+                <TableHead>Vence</TableHead>
+                {isAdmin && <TableHead></TableHead>}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {invitations.map((inv) => (
-                <tr key={inv.id}>
-                  <td>{inv.email}</td>
-                  <td><Badge>{ROLE_LABELS[inv.role]}</Badge></td>
-                  <td className="data-table__sub">
+                <TableRow key={inv.id}>
+                  <TableCell>{inv.email}</TableCell>
+                  <TableCell><Badge>{ROLE_LABELS[inv.role]}</Badge></TableCell>
+                  <TableCell className="data-table__sub">
                     {new Date(inv.expires_at).toLocaleDateString('es-AR')}
-                  </td>
-                </tr>
+                  </TableCell>
+                  {isAdmin && (
+                    <TableCell>
+                      <RevokeInvitationButton invitationId={inv.id} email={inv.email} />
+                    </TableCell>
+                  )}
+                </TableRow>
               ))}
-            </tbody>
-          </table>
-        </section>
+            </TableBody>
+          </Table>
+        </Card>
       )}
 
       {isAdmin && (
-        <section className="dash-section">
-          <h2 className="dash-section__title">Invitar miembro</h2>
-          <TeamInviteForm />
-        </section>
+        <Card>
+          <CardHeader>
+            <CardTitle>Invitar miembro</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <TeamInviteForm />
+          </CardContent>
+        </Card>
       )}
     </div>
   )

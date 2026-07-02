@@ -1,19 +1,12 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { StatCard } from '@/components/dashboard/StatCard'
-import { formatDate, formatTime } from '@/lib/utils'
-import { STATUS_LABELS, SURFACE_LABELS } from '@/lib/utils'
-import Link from 'next/link'
-import { Button } from '@/components/ui/Button'
-import { Badge } from '@/components/ui/Badge'
-import type { BookingStatus } from '@/lib/supabase/types'
-
-const STATUS_VARIANT: Record<BookingStatus, 'success' | 'warning' | 'danger' | 'default'> = {
-  confirmed: 'success',
-  pending: 'warning',
-  cancelled: 'danger',
-  no_show: 'default',
-}
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { formatDate } from '@/lib/utils'
+import { TodayBookingsClient } from '@/components/bookings/TodayBookingsClient'
+import { NewBookingTrigger } from '@/components/bookings/NewBookingTrigger'
+import type { CalendarBooking } from '@/components/calendar/BookingCalendar'
+import { Note01Icon, Grid02Icon, Coins01Icon } from '@hugeicons/core-free-icons'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -44,9 +37,9 @@ export default async function DashboardPage() {
     supabase
       .from('bookings')
       .select(`
-        id, start_time, end_time, status, total_price, notes,
-        courts(name, surface),
-        clients(full_name, phone)
+        id, court_id, client_id, start_time, end_time, status, total_price, source, payment_status, payment_method, notes,
+        courts(id, name, surface),
+        clients(id, full_name, phone)
       `)
       .eq('org_id', profile.org_id)
       .gte('start_time', todayStart.toISOString())
@@ -56,7 +49,7 @@ export default async function DashboardPage() {
 
     supabase
       .from('courts')
-      .select('id')
+      .select('*')
       .eq('org_id', profile.org_id)
       .eq('active', true),
 
@@ -64,7 +57,8 @@ export default async function DashboardPage() {
       .from('bookings')
       .select('*', { count: 'exact', head: true })
       .eq('org_id', profile.org_id)
-      .eq('status', 'pending'),
+      .eq('payment_status', 'pending')
+      .neq('status', 'cancelled'),
   ])
 
   const totalBookings = todayBookings?.length ?? 0
@@ -76,13 +70,13 @@ export default async function DashboardPage() {
   return (
     <div className="dash-page">
       <div className="dash-page__header">
-        <h1 className="dash-page__title">Hoy</h1>
-        <p className="dash-page__sub">
-          {formatDate(now, timezone)}
-        </p>
-        <Link href="/dashboard/bookings/new">
-          <Button variant="brand" size="sm">+ Nueva reserva</Button>
-        </Link>
+        <div className="dash-page__heading">
+          <h1 className="dash-page__title">Hoy</h1>
+          <p className="dash-page__sub">
+            {formatDate(now, timezone)}
+          </p>
+        </div>
+        <NewBookingTrigger courts={courts ?? []} timezone={timezone} />
       </div>
 
       <div className="stat-grid">
@@ -90,61 +84,39 @@ export default async function DashboardPage() {
           label="Reservas hoy"
           value={totalBookings}
           sub={`${confirmedBookings} confirmadas`}
+          icon={Note01Icon}
         />
         <StatCard
           label="Canchas activas"
           value={totalCourts}
+          icon={Grid02Icon}
         />
         <StatCard
           label="Pendientes de pago"
           value={pendingCountNum}
+          icon={Coins01Icon}
         />
       </div>
 
-      <section className="dash-section">
-        <h2 className="dash-section__title">Reservas del día</h2>
+      <Card>
+        <CardHeader>
+          <CardTitle>Reservas del día</CardTitle>
+        </CardHeader>
 
         {!todayBookings?.length ? (
-          <p className="dash-empty">No hay reservas para hoy.</p>
+          <CardContent>
+            <p className="dash-empty">No hay reservas para hoy.</p>
+          </CardContent>
         ) : (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Hora</th>
-                <th>Cancha</th>
-                <th>Cliente</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              {todayBookings.map((b) => {
-                const court = b.courts as { name: string; surface: string } | null
-                const client = b.clients as { full_name: string; phone: string } | null
-
-                return (
-                  <tr key={b.id}>
-                    <td className="data-table__time">
-                      {formatTime(b.start_time, timezone)} – {formatTime(b.end_time, timezone)}
-                    </td>
-                    <td>{court?.name ?? '—'}</td>
-                    <td>
-                      <p>{client?.full_name ?? 'Sin cliente'}</p>
-                      {client?.phone && (
-                        <p className="data-table__sub">{client.phone}</p>
-                      )}
-                    </td>
-                    <td>
-                      <Badge variant={STATUS_VARIANT[b.status as BookingStatus]}>
-                        {STATUS_LABELS[b.status]}
-                      </Badge>
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
+          <CardContent>
+            <TodayBookingsClient
+              bookings={todayBookings as unknown as CalendarBooking[]}
+              courts={courts ?? []}
+              timezone={timezone}
+            />
+          </CardContent>
         )}
-      </section>
+      </Card>
     </div>
   )
 }

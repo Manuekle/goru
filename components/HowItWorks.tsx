@@ -33,12 +33,12 @@ export default function HowItWorks() {
                 border: i === 0 ? 'none' : '1px solid var(--line)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontFamily: 'var(--font-mono)', fontSize: 14, fontWeight: 500,
-                color: i === 0 ? '#efe9dc' : 'var(--muted)',
+                color: i === 0 ? '#efe9dc' : 'var(--muted-text)',
                 marginBottom: 24,
                 boxShadow: i === 0 ? 'var(--sh-brand)' : 'var(--sh-sm)',
               }}>{step.n}</div>
               <h3 style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.025em', marginBottom: 10, color: 'var(--ink)' }}>{step.title}</h3>
-              <p style={{ color: 'var(--muted)', fontSize: 14.5, lineHeight: 1.65, letterSpacing: '-0.005em', fontWeight: 400 }}>{step.desc}</p>
+              <p style={{ color: 'var(--muted-text)', fontSize: 14.5, lineHeight: 1.65, letterSpacing: '-0.005em', fontWeight: 400 }}>{step.desc}</p>
             </div>
           ))}
         </div>

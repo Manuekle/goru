@@ -1,7 +1,8 @@
-import { clsx, type ClassValue } from 'clsx'
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
-  return clsx(inputs)
+  return twMerge(clsx(inputs))
 }
 
 export function slugify(text: string): string {
@@ -59,10 +60,10 @@ export function formatDateShort(date: Date | string, timezone?: string): string 
   }).format(d)
 }
 
-export const DAY_NAMES = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+export const DAY_NAMES = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'] as const
 export const DAY_NAMES_FULL = [
-  'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'
-]
+  'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado',
+] as const
 
 export const SURFACE_LABELS: Record<string, string> = {
   synthetic: 'Sintética',
@@ -83,4 +84,47 @@ export const STATUS_LABELS: Record<string, string> = {
   confirmed: 'Confirmada',
   cancelled: 'Cancelada',
   no_show: 'No se presentó',
+}
+
+export const PAYMENT_STATUS_LABELS: Record<string, string> = {
+  pending: 'Pago pendiente',
+  paid: 'Pagado',
+  refunded: 'Reembolsado',
+}
+
+export const PAYMENT_METHOD_LABELS: Record<string, string> = {
+  cash: 'Efectivo',
+  card: 'Tarjeta',
+  transfer: 'Transferencia',
+}
+
+export const TOURNAMENT_STATUS_LABELS: Record<string, string> = {
+  draft: 'Borrador',
+  open: 'Inscripciones abiertas',
+  active: 'En juego',
+  finished: 'Finalizado',
+}
+
+export const MATCH_STATUS_LABELS: Record<string, string> = {
+  scheduled: 'Programado',
+  playing: 'Jugando',
+  finished: 'Finalizado',
+  cancelled: 'Cancelado',
+}
+
+export function formatDateTime(date: Date | string, timezone?: string): string {
+  const d = typeof date === 'string' ? new Date(date) : date
+  return new Intl.DateTimeFormat('es-AR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: timezone,
+  }).format(d)
+}
+
+export function whatsappShareUrl(text: string): string {
+  return `https://wa.me/?text=${encodeURIComponent(text)}`
 }

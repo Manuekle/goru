@@ -3,7 +3,7 @@
 import { useActionState } from 'react'
 import { updateOrgSettings } from '@/actions/org'
 import { Input } from '@/components/ui/Input'
-import { Select } from '@/components/ui/Select'
+import { FormSelect } from '@/components/ui/FormSelect'
 import { Button } from '@/components/ui/Button'
 import type { Organization } from '@/lib/supabase/types'
 
@@ -39,7 +39,7 @@ export function OrgSettingsForm({ org }: OrgSettingsFormProps) {
       />
       <Input label="Teléfono" name="phone" defaultValue={org.phone ?? ''} />
       <Input label="Dirección" name="address" defaultValue={org.address ?? ''} />
-      <Select
+      <FormSelect
         label="Zona horaria"
         name="timezone"
         defaultValue={org.timezone}

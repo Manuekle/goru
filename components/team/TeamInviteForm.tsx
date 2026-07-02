@@ -3,7 +3,7 @@
 import { useActionState } from 'react'
 import { inviteMember } from '@/actions/team'
 import { Input } from '@/components/ui/Input'
-import { Select } from '@/components/ui/Select'
+import { FormSelect } from '@/components/ui/FormSelect'
 import { Button } from '@/components/ui/Button'
 
 const ROLE_OPTIONS = [
@@ -32,7 +32,7 @@ export function TeamInviteForm() {
         required
         error={err.email?.[0]}
       />
-      <Select
+      <FormSelect
         label="Rol"
         name="role"
         defaultValue="receptionist"

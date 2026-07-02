@@ -67,7 +67,7 @@ export default function Modal({ open, onClose }: Props) {
           </span>
           <button onClick={onClose} aria-label="Cerrar" style={{
             background:'var(--canvas-mid)', border:'none', width:34, height:34,
-            borderRadius:'50%', cursor:'pointer', color:'var(--muted)',
+            borderRadius:'50%', cursor:'pointer', color:'var(--muted-text)',
             display:'grid', placeItems:'center', transition:'background var(--dur-fast)',
           }}
             onMouseEnter={e => (e.currentTarget.style.background = 'var(--canvas)')}
@@ -85,7 +85,7 @@ export default function Modal({ open, onClose }: Props) {
         }}>
           {submitted ? '¡Listo, te contactamos hoy!' : '14 días gratis, sin tarjeta.'}
         </h3>
-        <p style={{ color:'var(--muted)', fontSize:14, marginBottom:24, fontWeight:400, position:'relative' }}>
+        <p style={{ color:'var(--muted-text)', fontSize:14, marginBottom:24, fontWeight:400, position:'relative' }}>
           {submitted
             ? 'Un especialista de Goru te escribirá en las próximas horas para activar tu panel.'
             : 'Cuéntanos sobre tu negocio y activamos tu panel hoy mismo.'}
@@ -98,7 +98,7 @@ export default function Modal({ open, onClose }: Props) {
               { label:'WhatsApp de contacto', type:'tel', ph:'321 000 0000', val:phone, set:setPhone, ref:undefined },
             ].map(field => (
               <div key={field.label} style={{ marginBottom:14, position:'relative' }}>
-                <label style={{ fontSize:12, color:'var(--muted)', fontFamily:'var(--font-mono)', display:'block', marginBottom:7 }}>
+                <label style={{ fontSize:12, color:'var(--muted-text)', fontFamily:'var(--font-mono)', display:'block', marginBottom:7 }}>
                   {field.label}
                 </label>
                 <div style={{ border:'1.5px solid var(--line)', borderRadius:'var(--r-full)', background:'var(--canvas-mid)' }}>

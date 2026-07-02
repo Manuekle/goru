@@ -28,6 +28,7 @@ export default async function BookSlugPage({ params }: Props) {
 
   return (
     <div className="book-page">
+      <p className="eyebrow book-eyebrow"><span className="dot" />Reservá tu turno</p>
       <h1 className="book-title">Elegí una cancha</h1>
 
       {!courts?.length ? (
@@ -36,17 +37,25 @@ export default async function BookSlugPage({ params }: Props) {
         <div className="book-court-grid">
           {courts.map((court) => (
             <Link key={court.id} href={`/book/${slug}/${court.id}`} className="book-court-card">
-              <p className="book-court-card__name">{court.name}</p>
-              <p className="book-court-card__surface">{SURFACE_LABELS[court.surface]}</p>
+              <div className="book-court-card__head">
+                <p className="book-court-card__name">{court.name}</p>
+                <span className="badge">{SURFACE_LABELS[court.surface]}</span>
+              </div>
               <p className="book-court-card__capacity">{court.capacity} jugadores</p>
               {court.description && (
                 <p className="book-court-card__desc">{court.description}</p>
               )}
-              <span className="btn btn-brand btn-sm book-court-card__cta">Reservar</span>
+              <span className="btn btn-brand btn-sm book-court-card__cta">Reservar →</span>
             </Link>
           ))}
         </div>
       )}
+
+      <div className="ticket-footer" style={{ marginTop: 32 }}>
+        <Link href={`/book/${slug}/torneos`} style={{ color: 'var(--brand)', fontWeight: 600 }}>
+          Ver torneos disponibles →
+        </Link>
+      </div>
     </div>
   )
 }

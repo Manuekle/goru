@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { ArrowRightIcon, LinkSquare02Icon } from '@hugeicons/core-free-icons'
+import LightRays from '@/components/ui/LightRays'
 
 interface Props { onOpen: () => void }
 
@@ -29,8 +30,21 @@ export default function Hero({ onOpen }: Props) {
   }, [])
 
   return (
-    <header style={{ position: 'relative', paddingTop: 148 }}>
-      <div className="wrap">
+    <header style={{ position: 'relative', paddingTop: 148, overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', inset: 0, zIndex: 0, opacity: 0.25 }}>
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#A82914"
+          raysSpeed={0.8}
+          lightSpread={0.5}
+          rayLength={1.4}
+          followMouse={true}
+          mouseInfluence={0.08}
+          noiseAmount={0.05}
+          distortion={0.03}
+        />
+      </div>
+      <div className="wrap" style={{ position: 'relative', zIndex: 1 }}>
         <div style={{
           display: 'grid', gridTemplateColumns: '1.1fr 0.9fr',
           gap: 52, alignItems: 'center',
@@ -58,7 +72,7 @@ export default function Hero({ onOpen }: Props) {
 
             <p className="rv" data-d="2" style={{
               fontSize: 'clamp(16px,1.5vw,18.5px)',
-              color: 'var(--muted)',
+              color: 'var(--muted-text)',
               maxWidth: '48ch', lineHeight: 1.65,
               letterSpacing: '-0.01em', fontWeight: 400, marginBottom: 36,
             }}>
@@ -142,7 +156,7 @@ export default function Hero({ onOpen }: Props) {
                 </div>
                 <span style={{
                   fontSize: 11, fontFamily: 'var(--font-mono)', fontWeight: 600,
-                  color: 'var(--muted)', background: 'var(--canvas-mid)',
+                  color: 'var(--muted-text)', background: 'var(--canvas-mid)',
                   border: '1px solid var(--line)', borderRadius: 'var(--r-full)',
                   padding: '4px 10px',
                 }}>Cancha 1</span>
@@ -206,7 +220,7 @@ export default function Hero({ onOpen }: Props) {
                       </div>
                     ))}
                   </div>
-                  <span style={{ fontSize: 10.5, fontFamily: 'var(--font-mono)', color: 'var(--muted)', fontWeight: 600 }}>
+                  <span style={{ fontSize: 10.5, fontFamily: 'var(--font-mono)', color: 'var(--muted-text)', fontWeight: 600 }}>
                     75% ocupado
                   </span>
                 </div>

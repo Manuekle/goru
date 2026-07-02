@@ -6,7 +6,7 @@ import { GlobeIcon, PlusSignIcon, CheckmarkCircleIcon } from '@hugeicons/core-fr
 
 const VENUES = [
   { id:'cb', init:'CB', name:'Campo Bello FC',   sub:'próximo cobro 5 jul',     color:'var(--brand)',   on:true  },
-  { id:'ln', init:'LN', name:'La Norte Sport',   sub:'próximo cobro 12 jul',    color:'var(--muted)',   on:true  },
+  { id:'ln', init:'LN', name:'La Norte Sport',   sub:'próximo cobro 12 jul',    color:'var(--muted-text)',   on:true  },
   { id:'ss', init:'SS', name:'Sintética del Sur', sub:'próximo cobro 18 jul',   color:'var(--faint)',   on:true  },
   { id:'et', init:'ET', name:'El Techo Fútbol',  sub:'En pausa desde el 2 jun', color:'var(--canvas-mid)', on:false },
 ]
@@ -28,7 +28,7 @@ export default function MultiVenue() {
             <h2 className="rv disp" data-d="1" style={{ fontSize:'clamp(28px,3.4vw,42px)', letterSpacing:'-0.03em', lineHeight:1.08, margin:'16px 0 0', color:'var(--ink)' }}>
               Cada cancha, su propio negocio. Tú decides cuándo está activa.
             </h2>
-            <p className="rv" data-d="1" style={{ color:'var(--muted)', fontSize:17, marginTop:16, letterSpacing:'-0.01em', maxWidth:'46ch', fontWeight:400, lineHeight:1.65 }}>
+            <p className="rv" data-d="1" style={{ color:'var(--muted-text)', fontSize:17, marginTop:16, letterSpacing:'-0.01em', maxWidth:'46ch', fontWeight:400, lineHeight:1.65 }}>
               Goru funciona por suscripción mensual, negocio por negocio. Activas, pausas o cancelas cuando quieras — sin perder tu historial ni tus datos.
             </p>
 
@@ -46,7 +46,7 @@ export default function MultiVenue() {
                   }}>{item.icon}</span>
                   <div>
                     <b style={{ fontWeight:700, fontSize:15, letterSpacing:'-0.015em', color:'var(--ink)' }}>{item.title}</b>
-                    <p style={{ color:'var(--muted)', fontSize:13.5, marginTop:4, letterSpacing:'-0.005em', fontWeight:400 }}>{item.desc}</p>
+                    <p style={{ color:'var(--muted-text)', fontSize:13.5, marginTop:4, letterSpacing:'-0.005em', fontWeight:400 }}>{item.desc}</p>
                   </div>
                 </li>
               ))}

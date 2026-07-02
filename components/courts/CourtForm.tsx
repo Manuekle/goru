@@ -3,7 +3,7 @@
 import { useActionState } from 'react'
 import { createCourt, updateCourt } from '@/actions/courts'
 import { Input } from '@/components/ui/Input'
-import { Select } from '@/components/ui/Select'
+import { FormSelect } from '@/components/ui/FormSelect'
 import { Textarea } from '@/components/ui/Textarea'
 import { Button } from '@/components/ui/Button'
 import { SURFACE_LABELS } from '@/lib/utils'
@@ -39,22 +39,24 @@ export function CourtForm({ court }: CourtFormProps) {
         error={err.name?.[0]}
       />
 
-      <Select
-        label="Superficie"
-        name="surface"
-        defaultValue={court?.surface ?? 'synthetic'}
-        options={SURFACE_OPTIONS}
-      />
+      <div className="field-row">
+        <FormSelect
+          label="Superficie"
+          name="surface"
+          defaultValue={court?.surface ?? 'synthetic'}
+          options={SURFACE_OPTIONS}
+        />
 
-      <Input
-        label="Capacidad (jugadores)"
-        name="capacity"
-        type="number"
-        min={2}
-        max={100}
-        defaultValue={court?.capacity ?? 10}
-        error={err.capacity?.[0]}
-      />
+        <Input
+          label="Capacidad (jugadores)"
+          name="capacity"
+          type="number"
+          min={2}
+          max={100}
+          defaultValue={court?.capacity ?? 10}
+          error={err.capacity?.[0]}
+        />
+      </div>
 
       <Textarea
         label="Descripción (opcional)"

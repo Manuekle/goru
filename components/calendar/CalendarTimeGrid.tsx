@@ -65,6 +65,15 @@ export function CalendarTimeGrid({
     onSlotClick(courtId, start, end)
   }
 
+  if (activeCourts.length === 0) {
+    return (
+      <div className="empty-state">
+        <p className="empty-state__title">Sin canchas activas</p>
+        <p className="empty-state__desc">Creá una cancha para empezar a ver y tomar reservas en el calendario.</p>
+      </div>
+    )
+  }
+
   return (
     <div
       className="cal-grid"

@@ -35,10 +35,19 @@ export default async function BookLayout({ params, children }: Props) {
 
   return (
     <div className="book-shell">
-      <header className="book-nav">
-        <p className="book-nav__name">{org.name}</p>
+      <div className="atmos" />
+      <div className="grain" />
+      <header className="book-nav frame">
+        <div className="book-nav__brand">
+          <span className="book-nav__mark">{org.name.charAt(0)}</span>
+          <p className="book-nav__name">{org.name}</p>
+        </div>
+        <span className="book-nav__tag">
+          <span className="pill-dot" />
+          Reservas online
+        </span>
       </header>
-      <main className="book-main">{children}</main>
+      <main className="book-main frame">{children}</main>
     </div>
   )
 }

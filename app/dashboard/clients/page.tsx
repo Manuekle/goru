@@ -2,7 +2,11 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
+import { Input } from '@/components/ui/Input'
+import { Card } from '@/components/ui/card'
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table'
 import { EmptyState } from '@/components/ui/EmptyState'
+import { Group01Icon } from '@hugeicons/core-free-icons'
 import { formatDateShort } from '@/lib/utils'
 
 interface PageProps {
@@ -43,47 +47,50 @@ export default async function ClientsPage({ searchParams }: PageProps) {
         <h1 className="dash-page__title">Clientes</h1>
       </div>
 
-      <form method="GET" className="search-bar">
-        <input
+      <form method="GET" className="flex gap-2">
+        <Input
           type="search"
           name="q"
           defaultValue={q}
           placeholder="Buscar por nombre, teléfono o email..."
-          className="field-input"
+          className="w-full sm:w-72"
         />
         <Button type="submit" variant="dark" size="sm">Buscar</Button>
       </form>
 
       {!clients?.length ? (
         <EmptyState
+          icon={Group01Icon}
           title={q ? 'Sin resultados' : 'Sin clientes todavía'}
           description={q ? `No se encontraron clientes para "${q}"` : 'Los clientes aparecen aquí cuando hacen reservas.'}
         />
       ) : (
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Teléfono</th>
-              <th>Email</th>
-              <th>Desde</th>
-            </tr>
-          </thead>
-          <tbody>
-            {clients.map((c) => (
-              <tr key={c.id}>
-                <td>
-                  <Link href={`/dashboard/clients/${c.id}`} className="data-table__link">
-                    {c.full_name}
-                  </Link>
-                </td>
-                <td>{c.phone ?? '—'}</td>
-                <td>{c.email ?? '—'}</td>
-                <td>{formatDateShort(c.created_at)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Card>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Nombre</TableHead>
+                <TableHead>Teléfono</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Desde</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {clients.map((c) => (
+                <TableRow key={c.id}>
+                  <TableCell>
+                    <Link href={`/dashboard/clients/${c.id}`} className="data-table__link">
+                      {c.full_name}
+                    </Link>
+                  </TableCell>
+                  <TableCell>{c.phone ?? '—'}</TableCell>
+                  <TableCell>{c.email ?? '—'}</TableCell>
+                  <TableCell>{formatDateShort(c.created_at)}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Card>
       )}
     </div>
   )

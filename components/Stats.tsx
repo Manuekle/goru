@@ -23,7 +23,7 @@ export default function Stats() {
                 fontFamily:'var(--font-display)', fontSize:34, fontWeight:800,
                 letterSpacing:'-0.03em', color:'var(--brand)', display:'block', marginBottom:10,
               }}>{cell.value}</b>
-              <p style={{ color:'var(--muted)', fontSize:14, fontWeight:400, letterSpacing:'-0.005em', lineHeight:1.55 }}>{cell.desc}</p>
+              <p style={{ color:'var(--muted-text)', fontSize:14, fontWeight:400, letterSpacing:'-0.005em', lineHeight:1.55 }}>{cell.desc}</p>
             </div>
           ))}
         </div>

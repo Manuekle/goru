@@ -1,10 +1,12 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
+import { Card, CardContent } from '@/components/ui/card'
 import { SURFACE_LABELS } from '@/lib/utils'
 import { EmptyState } from '@/components/ui/EmptyState'
+import { Grid02Icon } from '@hugeicons/core-free-icons'
+import { NewCourtTrigger } from '@/components/courts/NewCourtTrigger'
 
 export default async function CourtsPage() {
   const supabase = await createClient()
@@ -30,36 +32,35 @@ export default async function CourtsPage() {
     <div className="dash-page">
       <div className="dash-page__header">
         <h1 className="dash-page__title">Canchas</h1>
-        <Link href="/dashboard/courts/new">
-          <Button variant="brand" size="sm">+ Nueva cancha</Button>
-        </Link>
+        <NewCourtTrigger />
       </div>
 
       {!courts?.length ? (
         <EmptyState
+          icon={Grid02Icon}
           title="Sin canchas todavía"
           description="Creá tu primera cancha para empezar a recibir reservas."
-          action={
-            <Link href="/dashboard/courts/new">
-              <Button variant="brand">+ Nueva cancha</Button>
-            </Link>
-          }
+          action={<NewCourtTrigger />}
         />
       ) : (
-        <div className="court-grid">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {courts.map((court) => (
-            <Link key={court.id} href={`/dashboard/courts/${court.id}`} className="court-card">
-              <div className="court-card__head">
-                <span className="court-card__name">{court.name}</span>
-                <Badge variant={court.active ? 'success' : 'default'}>
-                  {court.active ? 'Activa' : 'Inactiva'}
-                </Badge>
-              </div>
-              <p className="court-card__surface">{SURFACE_LABELS[court.surface]}</p>
-              <p className="court-card__capacity">{court.capacity} jugadores</p>
-              {court.description && (
-                <p className="court-card__desc">{court.description}</p>
-              )}
+            <Link key={court.id} href={`/dashboard/courts/${court.id}`}>
+              <Card className="transition-colors hover:border-[var(--brand)]/50">
+                <CardContent>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-[family-name:var(--font-display)] text-base text-[var(--ink)]">{court.name}</span>
+                    <Badge variant={court.active ? 'success' : 'default'}>
+                      {court.active ? 'Activa' : 'Inactiva'}
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground">{SURFACE_LABELS[court.surface]}</p>
+                  <p className="text-sm text-muted-foreground">{court.capacity} jugadores</p>
+                  {court.description && (
+                    <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{court.description}</p>
+                  )}
+                </CardContent>
+              </Card>
             </Link>
           ))}
         </div>

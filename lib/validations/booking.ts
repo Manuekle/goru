@@ -9,6 +9,8 @@ export const BookingSchema = z.object({
   notes: z.string().optional(),
   total_price: z.coerce.number().min(0).default(0),
   source: z.enum(['admin', 'widget', 'phone']).default('admin'),
+  payment_status: z.enum(['pending', 'paid', 'refunded']).default('pending'),
+  payment_method: z.enum(['cash', 'card', 'transfer']).optional(),
 })
 
 export const PublicBookingSchema = z.object({
@@ -20,6 +22,7 @@ export const PublicBookingSchema = z.object({
   client_phone: z.string().min(6, 'Teléfono requerido'),
   client_email: z.string().email().optional().or(z.literal('')),
   notes: z.string().optional(),
+  payment_method: z.enum(['cash', 'card', 'transfer']).default('cash'),
 })
 
 export type BookingInput = z.infer<typeof BookingSchema>

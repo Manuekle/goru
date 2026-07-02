@@ -100,11 +100,13 @@ export async function deleteSchedule(courtId: string, dayOfWeek: number) {
   const { supabase, profile, error } = await getProfileOrRedirect()
   if (error || !profile) return { error }
 
-  await supabase
+  const { error: dbError } = await supabase
     .from('court_schedules')
     .delete()
     .eq('court_id', courtId)
     .eq('day_of_week', dayOfWeek)
+
+  if (dbError) return { error: { _form: [dbError.message] } }
 
   revalidatePath(`/dashboard/courts/${courtId}`)
   return { success: true }

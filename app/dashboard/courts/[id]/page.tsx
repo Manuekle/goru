@@ -1,9 +1,10 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect, notFound } from 'next/navigation'
-import Link from 'next/link'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { CourtForm } from '@/components/courts/CourtForm'
 import { ScheduleEditor } from '@/components/courts/ScheduleEditor'
-import { Button } from '@/components/ui/Button'
+import { BackButton } from '@/components/ui/BackButton'
+import { DeleteCourtButton } from '@/components/courts/DeleteCourtButton'
 
 interface Props {
   params: Promise<{ id: string }>
@@ -41,22 +42,29 @@ export default async function CourtEditPage({ params }: Props) {
   if (!court) notFound()
 
   return (
-    <div className="dash-page dash-page--narrow">
+    <div className="dash-page">
       <div className="dash-page__header">
-        <Link href="/dashboard/courts">
-          <Button variant="ghost" size="sm">← Canchas</Button>
-        </Link>
+        <BackButton href="/dashboard/courts" />
         <h1 className="dash-page__title">{court.name}</h1>
+        <DeleteCourtButton courtId={court.id} courtName={court.name} />
       </div>
 
-      <section className="dash-section">
-        <h2 className="dash-section__title">Información</h2>
-        <CourtForm court={court} />
-      </section>
+      <div className="court-detail-grid">
+        <Card className="court-detail-grid__info">
+          <CardHeader>
+            <CardTitle>Información</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CourtForm court={court} />
+          </CardContent>
+        </Card>
 
-      <section className="dash-section">
-        <ScheduleEditor courtId={court.id} schedules={schedules ?? []} />
-      </section>
+        <Card className="court-detail-grid__schedule">
+          <CardContent>
+            <ScheduleEditor courtId={court.id} schedules={schedules ?? []} />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }

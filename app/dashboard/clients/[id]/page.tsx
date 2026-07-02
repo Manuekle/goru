@@ -3,8 +3,11 @@ import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table'
 import { formatDateShort, formatTime, STATUS_LABELS } from '@/lib/utils'
 import { ClientForm } from '@/components/clients/ClientForm'
+import { DeleteClientButton } from '@/components/clients/DeleteClientButton'
 import type { BookingStatus } from '@/lib/supabase/types'
 
 const STATUS_VARIANT: Record<BookingStatus, 'success' | 'warning' | 'danger' | 'default'> = {
@@ -61,52 +64,61 @@ export default async function ClientDetailPage({ params }: Props) {
           <Button variant="ghost" size="sm">← Clientes</Button>
         </Link>
         <h1 className="dash-page__title">{client.full_name}</h1>
+        <DeleteClientButton clientId={client.id} clientName={client.full_name} />
       </div>
 
-      <section className="dash-section">
-        <h2 className="dash-section__title">Información</h2>
-        <ClientForm client={client} />
-      </section>
+      <Card>
+        <CardHeader>
+          <CardTitle>Información</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ClientForm client={client} />
+        </CardContent>
+      </Card>
 
-      <section className="dash-section">
-        <h2 className="dash-section__title">Historial de reservas</h2>
+      <Card>
+        <CardHeader>
+          <CardTitle>Historial de reservas</CardTitle>
+        </CardHeader>
         {!bookings?.length ? (
-          <p className="dash-empty">Sin reservas anteriores.</p>
+          <CardContent>
+            <p className="dash-empty">Sin reservas anteriores.</p>
+          </CardContent>
         ) : (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Cancha</th>
-                <th>Estado</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Fecha</TableHead>
+                <TableHead>Cancha</TableHead>
+                <TableHead>Estado</TableHead>
+                <TableHead>Total</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {bookings.map((b) => {
                 const court = b.courts as { name: string } | null
                 return (
-                  <tr key={b.id}>
-                    <td>
+                  <TableRow key={b.id}>
+                    <TableCell>
                       <p>{formatDateShort(b.start_time, timezone)}</p>
                       <p className="data-table__sub">
                         {formatTime(b.start_time, timezone)} – {formatTime(b.end_time, timezone)}
                       </p>
-                    </td>
-                    <td>{court?.name ?? '—'}</td>
-                    <td>
+                    </TableCell>
+                    <TableCell>{court?.name ?? '—'}</TableCell>
+                    <TableCell>
                       <Badge variant={STATUS_VARIANT[b.status as BookingStatus]}>
                         {STATUS_LABELS[b.status]}
                       </Badge>
-                    </td>
-                    <td>${Number(b.total_price).toLocaleString('es-AR')}</td>
-                  </tr>
+                    </TableCell>
+                    <TableCell>${Number(b.total_price).toLocaleString('es-AR')}</TableCell>
+                  </TableRow>
                 )
               })}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         )}
-      </section>
+      </Card>
     </div>
   )
 }

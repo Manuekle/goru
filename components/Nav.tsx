@@ -53,17 +53,17 @@ export default function Nav() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 32 }} className="nav-links-desktop">
             {links.map(l => (
               <a key={l.href} href={l.href} style={{
-                fontSize: 14, fontWeight: 500, color: 'var(--muted)',
+                fontSize: 14, fontWeight: 500, color: 'var(--muted-text)',
                 letterSpacing: '-0.01em', transition: 'color 0.2s',
               }}
                 onMouseEnter={e => (e.currentTarget.style.color = 'var(--ink)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'var(--muted)')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'var(--muted-text)')}
               >{l.label}</a>
             ))}
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <a href="#contacto" className="btn btn-ghost btn-sm" id="nav-login">
+            <a href="/auth/login" className="btn btn-ghost btn-sm" id="nav-login">
               Iniciar sesión
             </a>
             <a href="#precio" className="btn btn-dark btn-sm">Activar Goru</a>
@@ -102,10 +102,10 @@ export default function Nav() {
             <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)}
               style={{
                 padding: '13px 18px', borderRadius: 'var(--r-full)',
-                fontWeight: 600, color: 'var(--muted)', transition: '0.2s', display: 'block',
+                fontWeight: 600, color: 'var(--muted-text)', transition: '0.2s', display: 'block',
               }}
               onMouseEnter={e => { e.currentTarget.style.background = 'var(--canvas-mid)'; e.currentTarget.style.color = 'var(--ink)' }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--muted)' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--muted-text)' }}
             >{l.label}</a>
           ))}
           <a href="#precio" onClick={() => setMenuOpen(false)} className="btn btn-dark" style={{ marginTop: 8 }}>

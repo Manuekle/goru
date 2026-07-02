@@ -254,6 +254,10 @@ export type Database = {
           notes: string | null
           total_price: number
           source: 'admin' | 'widget' | 'phone'
+          payment_status: 'pending' | 'paid' | 'refunded'
+          payment_method: 'cash' | 'card' | 'transfer' | null
+          paid_at: string | null
+          checked_in_at: string | null
           created_at: string
         }
         Insert: {
@@ -267,6 +271,10 @@ export type Database = {
           notes?: string | null
           total_price?: number
           source?: 'admin' | 'widget' | 'phone'
+          payment_status?: 'pending' | 'paid' | 'refunded'
+          payment_method?: 'cash' | 'card' | 'transfer' | null
+          paid_at?: string | null
+          checked_in_at?: string | null
           created_at?: string
         }
         Update: {
@@ -280,6 +288,10 @@ export type Database = {
           notes?: string | null
           total_price?: number
           source?: 'admin' | 'widget' | 'phone'
+          payment_status?: 'pending' | 'paid' | 'refunded'
+          payment_method?: 'cash' | 'card' | 'transfer' | null
+          paid_at?: string | null
+          checked_in_at?: string | null
           created_at?: string
         }
         Relationships: [
@@ -350,6 +362,228 @@ export type Database = {
           }
         ]
       }
+      notifications: {
+        Row: {
+          id: string
+          org_id: string
+          booking_id: string | null
+          type: 'booking_created' | 'booking_cancelled' | 'payment_received' | 'booking_checked_in'
+          title: string
+          body: string | null
+          read_at: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          org_id: string
+          booking_id?: string | null
+          type: 'booking_created' | 'booking_cancelled' | 'payment_received' | 'booking_checked_in'
+          title: string
+          body?: string | null
+          read_at?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          org_id?: string
+          booking_id?: string | null
+          type?: 'booking_created' | 'booking_cancelled' | 'payment_received' | 'booking_checked_in'
+          title?: string
+          body?: string | null
+          read_at?: string | null
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'notifications_org_id_fkey'
+            columns: ['org_id']
+            isOneToOne: false
+            referencedRelation: 'organizations'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'notifications_booking_id_fkey'
+            columns: ['booking_id']
+            isOneToOne: false
+            referencedRelation: 'bookings'
+            referencedColumns: ['id']
+          }
+        ]
+      }
+      tournaments: {
+        Row: {
+          id: string
+          org_id: string
+          name: string
+          description: string | null
+          start_date: string
+          end_date: string
+          registration_open: boolean
+          registration_deadline: string | null
+          max_teams: number
+          price_per_team: number
+          status: 'draft' | 'open' | 'active' | 'finished'
+          rules: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          org_id: string
+          name: string
+          description?: string | null
+          start_date: string
+          end_date: string
+          registration_open?: boolean
+          registration_deadline?: string | null
+          max_teams?: number
+          price_per_team?: number
+          status?: 'draft' | 'open' | 'active' | 'finished'
+          rules?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          org_id?: string
+          name?: string
+          description?: string | null
+          start_date?: string
+          end_date?: string
+          registration_open?: boolean
+          registration_deadline?: string | null
+          max_teams?: number
+          price_per_team?: number
+          status?: 'draft' | 'open' | 'active' | 'finished'
+          rules?: string | null
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'tournaments_org_id_fkey'
+            columns: ['org_id']
+            isOneToOne: false
+            referencedRelation: 'organizations'
+            referencedColumns: ['id']
+          }
+        ]
+      }
+      tournament_teams: {
+        Row: {
+          id: string
+          tournament_id: string
+          team_name: string
+          captain_name: string
+          captain_phone: string
+          captain_email: string | null
+          payment_status: 'pending' | 'paid'
+          payment_method: string | null
+          registered_at: string
+        }
+        Insert: {
+          id?: string
+          tournament_id: string
+          team_name: string
+          captain_name: string
+          captain_phone: string
+          captain_email?: string | null
+          payment_status?: 'pending' | 'paid'
+          payment_method?: string | null
+          registered_at?: string
+        }
+        Update: {
+          id?: string
+          tournament_id?: string
+          team_name?: string
+          captain_name?: string
+          captain_phone?: string
+          captain_email?: string | null
+          payment_status?: 'pending' | 'paid'
+          payment_method?: string | null
+          registered_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'tournament_teams_tournament_id_fkey'
+            columns: ['tournament_id']
+            isOneToOne: false
+            referencedRelation: 'tournaments'
+            referencedColumns: ['id']
+          }
+        ]
+      }
+      tournament_matches: {
+        Row: {
+          id: string
+          tournament_id: string
+          round: number
+          match_number: number
+          team_a_id: string | null
+          team_b_id: string | null
+          court_id: string | null
+          scheduled_at: string | null
+          score_a: number | null
+          score_b: number | null
+          status: 'scheduled' | 'playing' | 'finished' | 'cancelled'
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          tournament_id: string
+          round?: number
+          match_number?: number
+          team_a_id?: string | null
+          team_b_id?: string | null
+          court_id?: string | null
+          scheduled_at?: string | null
+          score_a?: number | null
+          score_b?: number | null
+          status?: 'scheduled' | 'playing' | 'finished' | 'cancelled'
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          tournament_id?: string
+          round?: number
+          match_number?: number
+          team_a_id?: string | null
+          team_b_id?: string | null
+          court_id?: string | null
+          scheduled_at?: string | null
+          score_a?: number | null
+          score_b?: number | null
+          status?: 'scheduled' | 'playing' | 'finished' | 'cancelled'
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'tournament_matches_tournament_id_fkey'
+            columns: ['tournament_id']
+            isOneToOne: false
+            referencedRelation: 'tournaments'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'tournament_matches_team_a_id_fkey'
+            columns: ['team_a_id']
+            isOneToOne: false
+            referencedRelation: 'tournament_teams'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'tournament_matches_team_b_id_fkey'
+            columns: ['team_b_id']
+            isOneToOne: false
+            referencedRelation: 'tournament_teams'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'tournament_matches_court_id_fkey'
+            columns: ['court_id']
+            isOneToOne: false
+            referencedRelation: 'courts'
+            referencedColumns: ['id']
+          }
+        ]
+      }
     }
     Views: Record<string, never>
     Functions: {
@@ -367,7 +601,13 @@ export type Database = {
       court_surface: 'synthetic' | 'natural' | 'indoor' | 'clay'
       booking_status: 'pending' | 'confirmed' | 'cancelled' | 'no_show'
       booking_source: 'admin' | 'widget' | 'phone'
+      booking_payment_status: 'pending' | 'paid' | 'refunded'
+      booking_payment_method: 'cash' | 'card' | 'transfer'
       special_schedule_reason: 'maintenance' | 'holiday' | 'event' | 'closed'
+      notification_type: 'booking_created' | 'booking_cancelled' | 'payment_received' | 'booking_checked_in'
+      tournament_status: 'draft' | 'open' | 'active' | 'finished'
+      tournament_payment_status: 'pending' | 'paid'
+      match_status: 'scheduled' | 'playing' | 'finished' | 'cancelled'
     }
   }
 }
@@ -393,6 +633,10 @@ export type SpecialSchedule = Tables<'special_schedules'>
 export type Client = Tables<'clients'>
 export type Booking = Tables<'bookings'>
 export type Invitation = Tables<'invitations'>
+export type Notification = Tables<'notifications'>
+export type Tournament = Tables<'tournaments'>
+export type TournamentTeam = Tables<'tournament_teams'>
+export type TournamentMatch = Tables<'tournament_matches'>
 
 export type ProfileRole = Enums<'profile_role'>
 export type CourtSurface = Enums<'court_surface'>

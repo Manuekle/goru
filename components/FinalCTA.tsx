@@ -33,7 +33,7 @@ export default function FinalCTA({ onOpen }: Props) {
               Tu negocio merece operar sin fricción.
             </h2>
             <p style={{
-              color:'var(--muted)', fontSize:17, margin:'0 auto 36px',
+              color:'var(--muted-text)', fontSize:17, margin:'0 auto 36px',
               maxWidth:'48ch', letterSpacing:'-0.005em', fontWeight:400, lineHeight:1.65,
             }}>
               Activa Goru hoy, prueba 14 días gratis y decide después si quieres continuar. Sin tarjeta, sin permanencia.

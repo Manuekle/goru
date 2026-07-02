@@ -1,6 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { OrgSettingsForm } from '@/components/OrgSettingsForm'
+import { BookingLinkCard } from '@/components/BookingLinkCard'
 
 export default async function SettingsPage() {
   const supabase = await createClient()
@@ -21,7 +23,16 @@ export default async function SettingsPage() {
       <div className="dash-page__header">
         <h1 className="dash-page__title">Configuración</h1>
       </div>
-      <OrgSettingsForm org={profile.organizations as Parameters<typeof OrgSettingsForm>[0]['org']} />
+      <BookingLinkCard slug={(profile.organizations as { slug: string }).slug} />
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Organización</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <OrgSettingsForm org={profile.organizations as Parameters<typeof OrgSettingsForm>[0]['org']} />
+        </CardContent>
+      </Card>
     </div>
   )
 }

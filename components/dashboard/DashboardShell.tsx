@@ -15,9 +15,9 @@ export function DashboardShell({ org, profile, children }: Props) {
   return (
     <OrgContext.Provider value={{ org, profile }}>
       <div className="dash-layout">
-        <Sidebar role={profile.role} />
+        <Sidebar profile={profile} />
         <div className="dash-body">
-          <TopBar org={org} profile={profile} />
+          <TopBar org={org} />
           <main className="dash-main">{children}</main>
         </div>
       </div>

@@ -67,13 +67,13 @@ export default function Pricing({ onOpen }: Props) {
             }} />
             <span style={{ fontSize:12, fontFamily:'var(--font-mono)', fontWeight:600, color:'var(--brand)', letterSpacing:'0.06em', textTransform:'uppercase', position:'relative' }}>Plan Goru</span>
             <div style={{ display:'flex', alignItems:'baseline', gap:5, margin:'18px 0 6px', position:'relative' }}>
-              <span style={{ fontSize:20, fontWeight:700, color:'var(--muted)', alignSelf:'flex-start', marginTop:10 }}>$</span>
+              <span style={{ fontSize:20, fontWeight:700, color:'var(--muted-text)', alignSelf:'flex-start', marginTop:10 }}>$</span>
               <b style={{ fontFamily:'var(--font-display)', fontSize:60, fontWeight:800, letterSpacing:'-0.035em', lineHeight:1, color:'var(--ink)' }}>
                 <span className="digit-group" ref={priceRef} />
               </b>
               <span style={{ fontSize:15, color:'var(--faint)', fontFamily:'var(--font-mono)' }}>/ mes por negocio</span>
             </div>
-            <p style={{ color:'var(--muted)', fontSize:14.5, marginBottom:28, fontWeight:400, position:'relative' }}>
+            <p style={{ color:'var(--muted-text)', fontSize:14.5, marginBottom:28, fontWeight:400, position:'relative' }}>
               Reservas ilimitadas, cobro online y panel administrativo completo.
             </p>
             <ul style={{ listStyle:'none', display:'flex', flexDirection:'column', gap:13, marginBottom:30, position:'relative' }}>

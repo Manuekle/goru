@@ -19,7 +19,7 @@ export default function Footer() {
               <Logo size={24} />
               goru
             </a>
-            <p style={{ color:'var(--muted)', fontSize:14, lineHeight:1.65, maxWidth:'30ch', fontWeight:400 }}>
+            <p style={{ color:'var(--muted-text)', fontSize:14, lineHeight:1.65, maxWidth:'30ch', fontWeight:400 }}>
               El software para negocios de canchas. Reservas, cobro y administración en un solo panel.
             </p>
           </div>
@@ -38,11 +38,11 @@ export default function Footer() {
                 const isEmail = href.startsWith('mailto')
                 return (
                   <a key={label} href={isEmail ? `mailto:${href.slice(7)}` : href} style={{
-                    display:'block', color:'var(--muted)', fontSize:14, marginBottom:10,
+                    display:'block', color:'var(--muted-text)', fontSize:14, marginBottom:10,
                     fontWeight:500, letterSpacing:'-0.01em', transition:'color 0.2s',
                   }}
                     onMouseEnter={e => (e.currentTarget.style.color = 'var(--ink)')}
-                    onMouseLeave={e => (e.currentTarget.style.color = 'var(--muted)')}
+                    onMouseLeave={e => (e.currentTarget.style.color = 'var(--muted-text)')}
                   >{label}</a>
                 )
               })}

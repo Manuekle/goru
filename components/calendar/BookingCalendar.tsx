@@ -9,10 +9,20 @@ import type { Court, Booking, Client } from '@/lib/supabase/types'
 
 export type CalendarBooking = Pick<
   Booking,
-  'id' | 'court_id' | 'start_time' | 'end_time' | 'status' | 'notes' | 'total_price' | 'source'
+  | 'id'
+  | 'court_id'
+  | 'client_id'
+  | 'start_time'
+  | 'end_time'
+  | 'status'
+  | 'notes'
+  | 'total_price'
+  | 'source'
+  | 'payment_status'
+  | 'payment_method'
 > & {
   courts: { id: string; name: string } | null
-  clients: { full_name: string; phone: string } | null
+  clients: { id: string; full_name: string; phone: string } | null
 }
 
 interface BookingCalendarProps {

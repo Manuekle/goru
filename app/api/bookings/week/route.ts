@@ -27,9 +27,9 @@ export async function GET(request: NextRequest) {
   const { data: bookings, error } = await supabase
     .from('bookings')
     .select(`
-      id, court_id, start_time, end_time, status, notes, total_price, source,
+      id, court_id, client_id, start_time, end_time, status, notes, total_price, source, payment_status, payment_method,
       courts(id, name),
-      clients(full_name, phone)
+      clients(id, full_name, phone)
     `)
     .eq('org_id', profile.org_id)
     .gte('start_time', from)

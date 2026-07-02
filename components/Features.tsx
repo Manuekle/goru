@@ -39,7 +39,7 @@ export default function Features() {
               letterSpacing: '-0.03em', maxWidth: '18ch', position: 'relative',
               lineHeight: 1.16, marginBottom: 12, color: 'var(--ink)',
             }}>Cobro online y división automática de pagos</h3>
-            <p style={{ color: 'var(--muted)', fontSize: 14.5, maxWidth: '40ch', lineHeight: 1.65, position: 'relative', fontWeight: 400, marginBottom: 32 }}>
+            <p style={{ color: 'var(--muted-text)', fontSize: 14.5, maxWidth: '40ch', lineHeight: 1.65, position: 'relative', fontWeight: 400, marginBottom: 32 }}>
               Cada jugador paga su parte con un enlace individual. Tu negocio recibe el dinero confirmado, sin efectivo perdido ni reservas a medias.
             </p>
             <div style={{ display: 'flex', gap: 32, position: 'relative' }}>
@@ -79,7 +79,7 @@ export default function Features() {
               letterSpacing: '-0.03em', lineHeight: 1.16, marginBottom: 12,
               color: 'var(--ink)', position: 'relative',
             }}>Torneos, escuela deportiva y eventos</h3>
-            <p style={{ color: 'var(--muted)', fontSize: 14.5, lineHeight: 1.65, position: 'relative', fontWeight: 400, maxWidth: '38ch' }}>
+            <p style={{ color: 'var(--muted-text)', fontSize: 14.5, lineHeight: 1.65, position: 'relative', fontWeight: 400, maxWidth: '38ch' }}>
               Gestiona inscripciones, fixture y cobros de tus torneos sin salir del panel.
             </p>
           </div>
@@ -113,7 +113,7 @@ function SmCard({ icon, title, desc, d, gridRow }: {
         {icon}
       </div>
       <h3 style={{ fontSize: 17, fontWeight: 700, letterSpacing: '-0.025em', marginBottom: 9, color: 'var(--ink)' }}>{title}</h3>
-      <p style={{ color: 'var(--muted)', fontSize: 14, lineHeight: 1.6, letterSpacing: '-0.005em', fontWeight: 400 }}>{desc}</p>
+      <p style={{ color: 'var(--muted-text)', fontSize: 14, lineHeight: 1.6, letterSpacing: '-0.005em', fontWeight: 400 }}>{desc}</p>
     </div>
   )
 }
