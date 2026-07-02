@@ -13,12 +13,15 @@ export async function GET(request: NextRequest) {
 
     if (!error) {
       const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        return NextResponse.redirect(`${origin}/auth/login?error=auth_failed`)
+      }
 
       // Check if user needs onboarding
       const { data: profile } = await supabase
         .from('profiles')
         .select('org_id')
-        .eq('id', user?.id)
+        .eq('id', user.id)
         .single()
 
       if (!profile?.org_id) {
