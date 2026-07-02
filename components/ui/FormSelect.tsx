@@ -42,7 +42,7 @@ export function FormSelect({
           {label}
         </label>
       )}
-      <Select name={name} items={options} value={value} defaultValue={defaultValue} onValueChange={onValueChange} required={required} disabled={disabled}>
+      <Select name={name} items={options} value={value} defaultValue={defaultValue} onValueChange={onValueChange ? (val) => val != null && onValueChange(val) : undefined} required={required} disabled={disabled}>
         <SelectTrigger id={inputId} className={className}>
           <SelectValue />
         </SelectTrigger>
