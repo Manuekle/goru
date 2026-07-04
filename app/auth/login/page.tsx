@@ -30,6 +30,7 @@ export default function LoginPage() {
           name="email"
           type="email"
           autoComplete="email"
+          defaultValue="test@goru.dev"
           required
           error={err?.email?.[0]}
         />
@@ -38,6 +39,7 @@ export default function LoginPage() {
           name="password"
           type="password"
           autoComplete="current-password"
+          defaultValue="Test1234!"
           required
           error={err?.password?.[0]}
         />
