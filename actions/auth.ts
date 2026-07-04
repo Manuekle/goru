@@ -34,17 +34,9 @@ export async function signIn(_state: unknown, formData: FormData) {
   const { error, data } = await supabase.auth.signInWithPassword({ email, password })
   if (error) return { error: { _form: ['Email o contraseña incorrectos'] } }
 
-  const userId = data.user?.id
-  if (!userId) redirect('/auth/login')
-
-  // Check if user has an org; redirect accordingly
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('org_id')
-    .eq('id', userId)
-    .single()
-
-  if (!profile?.org_id) redirect('/onboarding')
+  // Use JWT app_metadata (synced by DB trigger) to bypass RLS on profiles
+  const orgId = data.user?.app_metadata?.org_id as string | undefined
+  if (!orgId) redirect('/onboarding')
   redirect('/dashboard')
 }
 

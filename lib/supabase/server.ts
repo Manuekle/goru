@@ -14,14 +14,14 @@ export async function createClient() {
           return cookieStore.getAll()
         },
         setAll(cookiesToSet) {
-          try {
-            cookiesToSet.forEach(({ name, value, options }) =>
+          cookiesToSet.forEach(({ name, value, options }) => {
+            try {
               cookieStore.set(name, value, options)
-            )
-          } catch {
-            // Called from a Server Component — session refresh is
-            // handled by middleware instead, so this is a no-op.
-          }
+            } catch {
+              // Server Component context — cookie set fails silently.
+              // Middleware handles session refresh on next request.
+            }
+          })
         },
       },
     }

@@ -17,14 +17,9 @@ export async function GET(request: NextRequest) {
         return NextResponse.redirect(`${origin}/auth/login?error=auth_failed`)
       }
 
-      // Check if user needs onboarding
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('org_id')
-        .eq('id', user.id)
-        .single()
-
-      if (!profile?.org_id) {
+      // Use JWT app_metadata to bypass RLS on profiles
+      const orgId = user.app_metadata?.org_id as string | undefined
+      if (!orgId) {
         return NextResponse.redirect(`${origin}/onboarding`)
       }
 
