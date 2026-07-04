@@ -63,10 +63,7 @@ export default function Nav() {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <a href="/auth/login" className="btn btn-ghost btn-sm" id="nav-login">
-              Iniciar sesión
-            </a>
-            <a href="#precio" className="btn btn-dark btn-sm">Activar Goru</a>
+            <a href="/auth/login" className="btn btn-dark btn-sm">Iniciar sesión</a>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Menú" aria-expanded={menuOpen}
@@ -108,8 +105,8 @@ export default function Nav() {
               onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--muted-text)' }}
             >{l.label}</a>
           ))}
-          <a href="#precio" onClick={() => setMenuOpen(false)} className="btn btn-dark" style={{ marginTop: 8 }}>
-            Activar Goru
+          <a href="/auth/login" onClick={() => setMenuOpen(false)} className="btn btn-dark" style={{ marginTop: 8 }}>
+            Iniciar sesión
           </a>
         </div>
       )}
@@ -118,7 +115,6 @@ export default function Nav() {
         @media (max-width: 760px) {
           .nav-links-desktop { display:none !important; }
           .menu-btn-mobile { display:flex !important; }
-          #nav-login { display:none !important; }
         }
       `}</style>
     </>
