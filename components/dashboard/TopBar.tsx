@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { InboxIcon } from '@hugeicons/core-free-icons'
+import { InboxIcon, Menu01Icon } from '@hugeicons/core-free-icons'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -15,6 +15,7 @@ import type { Organization, Notification } from '@/lib/supabase/types'
 
 interface TopBarProps {
   org: Organization
+  onMenuClick?: () => void
 }
 
 const PAGE_LABELS: Record<string, string> = {
@@ -34,7 +35,7 @@ function useCurrentPageLabel() {
   return key ? (PAGE_LABELS[key] ?? null) : null
 }
 
-export function TopBar({ org }: TopBarProps) {
+export function TopBar({ org, onMenuClick }: TopBarProps) {
   const pageLabel = useCurrentPageLabel()
   const [notifications, setNotifications] = useState<Notification[]>([])
   const supabase = createClient()
@@ -64,6 +65,9 @@ export function TopBar({ org }: TopBarProps) {
 
   return (
     <header className="dash-topbar">
+      <button className="dash-topbar__menu" onClick={onMenuClick} aria-label="Menú de navegación">
+        <HugeiconsIcon icon={Menu01Icon} size={18} />
+      </button>
       <div className="dash-topbar__crumbs">
         <p className="dash-topbar__org">{org.name}</p>
         {pageLabel && (

@@ -58,15 +58,17 @@ function initials(name: string) {
 
 interface SidebarProps {
   profile: Profile
+  mobileOpen?: boolean
+  onMobileClose?: () => void
 }
 
-export function Sidebar({ profile }: SidebarProps) {
+export function Sidebar({ profile, mobileOpen, onMobileClose }: SidebarProps) {
   const pathname = usePathname()
 
   const visible = NAV.filter((item) => !item.roles || item.roles.includes(profile.role))
 
   return (
-    <aside className="dash-sidebar">
+    <aside className={`dash-sidebar${mobileOpen ? ' dash-sidebar--open' : ''}`}>
       <div className="dash-sidebar__logo">
         <Logo size={28} />
         <span className="dash-sidebar__brand">Goru</span>
@@ -81,6 +83,7 @@ export function Sidebar({ profile }: SidebarProps) {
             <Link
               key={href}
               href={href}
+              onClick={onMobileClose}
               className={cn('dash-nav-item', active && 'dash-nav-item--active')}
             >
               <HugeiconsIcon icon={Icon} size={18} />
